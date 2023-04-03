@@ -1,0 +1,5 @@
+.idea
+macos-workstation.yml
+*.swp
+localhost
+ansible.cfg

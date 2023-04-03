@@ -1,0 +1,42 @@
+---
+
+# ansible-playbook --ask-become-pass playbooks/macos-workstation.yml
+
+- hosts: localhost
+  connection: local
+  gather_facts: true
+
+  vars:
+
+    # ansible-role-homebrew
+    homebrew_clear_cache: true
+    homebrew_group: staff
+    homebrew_user: "{{ lookup('env','USER') }}"
+    homebrew_upgrade_all_packages: false
+    ansible_python_interpreter: "/usr/bin/python3"
+
+    homebrew_taps:
+      - colindean/fonts-nonfree     # font-microsoft-office
+      - homebrew/cask-fonts
+      - homebrew/services
+      - mantoso/tap
+      - xen0l/homebrew-taps         # aws-gate
+      - snyk/tap                    # snyk # https://snyk.io
+
+    homebrew_cask_uninstalled_apps:
+      - some_app   # This will throw and error. Shame on you for not looking ;-)
+
+    homebrew_cask_apps:
+      - appcleaner
+      - firefox
+
+    homebrew_installed_packages:
+      - coreutils
+      - direnv    # Required for mantoso/ansible
+      - git
+      - wget
+      - stow      # Required for tracphil/dotfiles
+
+  roles:
+    - mantoso-role-homebrew
+
